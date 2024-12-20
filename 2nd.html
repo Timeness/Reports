@@ -13,19 +13,19 @@
       font-family: 'Signika Negative', sans-serif;
     }
 
-    /* Custom Confirm Animation */
-    .line-md--circle-filled-to-confirm-circle-filled-transition::after {
+    /* Chevron Animation */
+    .line-md--chevron-small-right::after {
       display: inline-block;
       width: 24px;
       height: 24px;
       vertical-align: -0.125em;
-      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cmask id='lineMdCircleFilledToConfirmCircleFilledTransition0'%3E%3Cg fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cpath fill='%23fff' d='M3 12c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 4.97 -4.03 9 -9 9c-4.97 0 -9 -4.03 -9 -9Z'/%3E%3Cpath stroke='%23000' stroke-dasharray='14' stroke-dashoffset='14' d='M8 12l3 3l5 -5'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' dur='0.2s' values='14;0'/%3E%3C/path%3E%3C/g%3E%3C/mask%3E%3Crect width='24' height='24' fill='%23d1dcd0' mask='url(%23lineMdCircleFilledToConfirmCircleFilledTransition0)'/%3E%3C/svg%3E");
+      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23d1dcd0' stroke-dasharray='10' stroke-dashoffset='10' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12l-5 -5M15 12l-5 5'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' dur='0.3s' values='10;0'/%3E%3C/path%3E%3C/svg%3E");
     }
 
-    /* Adjust Icon Position */
+    /* Adjust Chevron Position */
     .icon {
       margin-right: -10px; /* Move slightly left */
-      transform: translateX(-5px); /* Further fine-tune position */
+      transform: translateX(-5px); /* Fine-tune */
     }
   </style>
 </head>
@@ -40,47 +40,47 @@
       <!-- Each option -->
       <li class="option-item flex justify-between items-center text-lg" data-option="1">
         I don’t like it
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="2">
         Child abuse
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="3">
         Violence
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="4">
         Illegal goods
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="5">
         Illegal adult content
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="6">
         Personal data
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="7">
         Terrorism
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="8">
         Scam or spam
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="9">
         Copyright
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="10">
         Other
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="11">
         It’s not illegal, but must be taken down
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
     </ul>
   </div>
@@ -99,16 +99,16 @@
         if (activeOption) {
           const prevIcon = activeOption.querySelector('.icon');
           prevIcon.classList.remove('line-md--circle-filled-to-confirm-circle-filled-transition');
-          prevIcon.innerHTML = '&gt;'; // Reset to greater than
+          prevIcon.classList.add('line-md--chevron-small-right'); // Restore chevron
         }
 
         // Set the clicked option as active
         activeOption = option;
 
-        // Show loading circle
+        // Show confirmation animation
         const icon = option.querySelector('.icon');
-        icon.innerHTML = ''; // Clear the content
-        icon.classList.add('line-md--circle-filled-to-confirm-circle-filled-transition'); // Add animation class
+        icon.classList.remove('line-md--chevron-small-right'); // Remove chevron
+        icon.classList.add('line-md--circle-filled-to-confirm-circle-filled-transition'); // Add confirm animation
       });
     });
   </script>
