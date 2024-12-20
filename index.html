@@ -6,11 +6,41 @@
   <title>Interactive Report Page</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet">
-  <!-- Import the Signika Negative Font -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300..700&display=swap');
     body {
       font-family: 'Signika Negative', sans-serif;
+    }
+
+    /* Chevron Icon (Default) */
+    .line-md--chevron-small-right::after {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      vertical-align: -0.125em;
+      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23d1dcd0' stroke-dasharray='10' stroke-dashoffset='10' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12l-5 -5M15 12l-5 5'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' dur='0.3s' values='10;0'/%3E%3C/path%3E%3C/svg%3E");
+    }
+
+    /* Check Icon (After Tap) */
+    .line-md--circle-filled-to-confirm-circle-filled-transition::after {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      vertical-align: -0.125em;
+      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cmask id='lineMdCircleFilledToConfirmCircleFilledTransition0'%3E%3Cg fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cpath fill='%23fff' d='M3 12c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 4.97 -4.03 9 -9 9c-4.97 0 -9 -4.03 -9 -9Z'/%3E%3Cpath stroke='%23000' stroke-dasharray='14' stroke-dashoffset='14' d='M8 12l3 3l5 -5'%3E%3Canimate fill='freeze' attributeName='stroke-dashoffset' dur='0.2s' values='14;0'/%3E%3C/path%3E%3C/g%3E%3C/mask%3E%3Crect width='24' height='24' fill='%23d1dcd0' mask='url(%23lineMdCircleFilledToConfirmCircleFilledTransition0)'/%3E%3C/svg%3E");
+    }
+
+    /* Adjust Chevron Position */
+    .icon {
+      margin-left: 10px;
+    }
+
+    /* Error Text Styling */
+    .error-text {
+      display: none;
+      color: red;
+      font-size: 0.875rem;
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -18,94 +48,110 @@
   <div class="max-w-md mx-auto p-4">
     <!-- Header -->
     <h1 class="text-xl font-bold mb-4">Report</h1>
-    <p class="text-sm text-gray-400 mb-6">What is wrong with this message?</p>
-    
+    <p class="text-sm text-blue-400 mb-6">What is wrong with this channel/group?</p>
+
     <!-- Report Options -->
     <ul id="report-options" class="space-y-4">
-      <!-- Each option -->
       <li class="option-item flex justify-between items-center text-lg" data-option="1">
         I don’t like it
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="2">
         Child abuse
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="3">
         Violence
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="4">
         Illegal goods
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="5">
         Illegal adult content
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="6">
         Personal data
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="7">
         Terrorism
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="8">
         Scam or spam
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="9">
         Copyright
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
       <li class="option-item flex justify-between items-center text-lg" data-option="10">
         Other
-        <span class="icon text-gray-500">&gt;</span>
-      </li>
-      <li class="option-item flex justify-between items-center text-lg" data-option="11">
-        It’s not illegal, but must be taken down
-        <span class="icon text-gray-500">&gt;</span>
+        <span class="icon text-gray-500 line-md--chevron-small-right"></span>
       </li>
     </ul>
+
+    <!-- Error Text -->
+    <p id="error-message" class="error-text">Please choose a report option first then submit request !</p>
+
+    <!-- Submit Button -->
+    <button id="submit-button" class="mt-6 w-full py-3 bg-blue-600 text-white text-lg font-semibold rounded-lg transition hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300">
+      Submit Report
+    </button>
   </div>
 
-  <!-- Flowbite JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
-  <!-- Custom Script -->
   <script>
-    // Get all options
     const options = document.querySelectorAll('.option-item');
+    const submitButton = document.getElementById('submit-button');
+    const errorMessage = document.getElementById('error-message');
     let activeOption = null;
 
+    // Handle Option Selection
     options.forEach(option => {
       option.addEventListener('click', () => {
         // Reset previously active option
         if (activeOption) {
           const prevIcon = activeOption.querySelector('.icon');
-          prevIcon.innerHTML = '&gt;'; // Reset to greater than
+          prevIcon.classList.remove('line-md--circle-filled-to-confirm-circle-filled-transition');
+          prevIcon.classList.add('line-md--chevron-small-right');
         }
 
-        // Set the clicked option as active
+        // Set clicked option as active
         activeOption = option;
+        errorMessage.style.display = 'none'; // Hide error message if displayed
 
-        // Show loading circle
+        // Show confirmation animation
         const icon = option.querySelector('.icon');
-        icon.innerHTML = '<div class="spinner border-t-transparent border-white border-2 rounded-full w-4 h-4 animate-spin"></div>';
-
-        // Simulate loading and then show checkmark
-        setTimeout(() => {
-          icon.innerHTML = '✔'; // Show checkmark
-        }, 1000); // 1-second delay for loading effect
+        icon.classList.remove('line-md--chevron-small-right');
+        icon.classList.add('line-md--circle-filled-to-confirm-circle-filled-transition');
       });
     });
-  </script>
 
-  <!-- Loading Spinner Styles -->
-  <style>
-    .spinner {
-      border-width: 2px;
-    }
-  </style>
+    // Handle Submit Button Click
+    submitButton.addEventListener('click', () => {
+      if (!activeOption) {
+        // Show error message if no option is selected
+        errorMessage.style.display = 'block';
+      } else {
+        // Show loading animation inside button
+        submitButton.innerHTML = `
+          <svg class="animate-spin h-5 w-5 mx-auto text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8h8a8 8 0 01-16 0z"></path>
+          </svg>
+        `;
+
+        // Simulate request completion after 2 seconds
+        setTimeout(() => {
+          submitButton.innerHTML = 'Report Submitted!';
+          submitButton.classList.remove('bg-blue-600');
+          submitButton.classList.add('bg-green-600');
+        }, 2000);
+      }
+    });
+  </script>
 </body>
 </html>
