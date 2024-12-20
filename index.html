@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Report Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet">
+</head>
+<body class="bg-black text-white font-sans">
+  <div class="max-w-md mx-auto p-4">
+    <!-- Header -->
+    <h1 class="text-xl font-bold mb-4">Report</h1>
+    <p class="text-sm text-gray-400 mb-6">What is wrong with this message?</p>
+    
+    <!-- Report Options -->
+    <ul id="report-options" class="space-y-4">
+      <!-- Each option -->
+      <li class="option-item flex justify-between items-center text-lg" data-option="1">
+        I don’t like it
+        <span class="icon text-gray-500">&gt;</span>
+      </li>
+      <li class="option-item flex justify-between items-center text-lg" data-option="2">
+        Child abuse
+        <span class="icon text-gray-500">&gt;</span>
+      </li>
+      <li class="option-item flex justify-between items-center text-lg" data-option="3">
+        Violence
+        <span class="icon text-gray-500">&gt;</span>
+      </li>
+      <li class="option-item flex justify-between items-center text-lg" data-option="4">
+        Illegal goods
+        <span class="icon text-gray-500">&gt;</span>
+      </li>
+      <li class="option-item flex justify-between items-center text-lg" data-option="5">
+        Illegal adult content
+        <span class="icon text-gray-500">&gt;</span>
+      </li>
+      <li class="option-item flex justify-between items-center text-lg" data-option="6">
+        Personal data
+        <span class="icon text-gray-500">&gt;</span>
+      </li>
+      <li class="option-item flex justify-between items-center text-lg" data-option="7">
+        Terrorism
+        <span class="icon text-gray-500">&gt;</span>
+      </li>
+      <li class="option-item flex justify-between items-center text-lg" data-option="8">
+        Scam or spam
+        <span class="icon text-gray-500">&gt;</span>
+      </li>
+      <li class="option-item flex justify-between items-center text-lg" data-option="9">
+        Copyright
+        <span class="icon text-gray-500">&gt;</span>
+      </li>
+      <li class="option-item flex justify-between items-center text-lg" data-option="10">
+        Other
+        <span class="icon text-gray-500">&gt;</span>
+      </li>
+      <li class="option-item flex justify-between items-center text-lg" data-option="11">
+        It’s not illegal, but must be taken down
+        <span class="icon text-gray-500">&gt;</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Flowbite JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+  <!-- Custom Script -->
+  <script>
+    // Get all options
+    const options = document.querySelectorAll('.option-item');
+    let activeOption = null;
+
+    options.forEach(option => {
+      option.addEventListener('click', () => {
+        // Reset previously active option
+        if (activeOption) {
+          const prevIcon = activeOption.querySelector('.icon');
+          prevIcon.innerHTML = '&gt;'; // Reset to greater than
+        }
+
+        // Set the clicked option as active
+        activeOption = option;
+
+        // Show loading circle
+        const icon = option.querySelector('.icon');
+        icon.innerHTML = '<div class="spinner border-t-transparent border-white border-2 rounded-full w-4 h-4 animate-spin"></div>';
+
+        // Simulate loading and then show checkmark
+        setTimeout(() => {
+          icon.innerHTML = '✔'; // Show checkmark
+        }, 1000); // 1-second delay for loading effect
+      });
+    });
+  </script>
+
+  <!-- Loading Spinner Styles -->
+  <style>
+    .spinner {
+      border-width: 2px;
+    }
+  </style>
+</body>
+</html>
