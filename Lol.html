@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Report Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300..700&display=swap');
+    body {
+      font-family: 'Signika Negative', sans-serif;
+      background-color: #000;
+      color: #fff;
+    }
+    .error-text {
+      display: none;
+      color: red;
+      margin-top: 10px;
+    }
+    .success-text {
+      display: none;
+      color: green;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body class="p-6">
+  <div id="app" class="max-w-md mx-auto">
+    <h1 class="text-xl font-bold mb-4">Report</h1>
+    <p id="description" class="text-sm text-blue-400 mb-6">Loading...</p>
+
+    <!-- Report Options -->
+    <ul id="report-options" class="space-y-4">
+      <!-- Options will be dynamically added -->
+    </ul>
+
+    <!-- Error Text -->
+    <p id="error-message" class="error-text">Please choose a report option!</p>
+
+    <!-- Submit Button -->
+    <button id="submit-button" class="mt-6 w-full py-3 bg-blue-600 text-white text-lg font-semibold rounded-lg transition hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300">
+      Submit Report
+    </button>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const reportId = urlParams.get('id');
+    const description = document.getElementById('description');
+    const reportOptions = document.getElementById('report-options');
+    const submitButton = document.getElementById('submit-button');
+    const errorMessage = document.getElementById('error-message');
+    let activeOption = null;
+
+    // Predefined Report Options
+    const options = [
+      "I don’t like it",
+      "Child abuse",
+      "Violence",
+      "Illegal goods",
+      "Illegal adult content",
+      "Personal data",
+      "Terrorism",
+      "Scam or spam",
+      "Copyright",
+      "Other",
+    ];
+
+    // Validate ID
+    if (!reportId) {
+      description.textContent = "⚠️ No Report ID Found";
+      submitButton.style.display = "none";
+      return;
+    }
+
+    // Validate Report ID (Simulated API Check)
+    fetch(`https://your-backend.com/validate?id=${reportId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (!data.valid) {
+          description.textContent = "⚠️ Invalid or Expired Report ID";
+          submitButton.style.display = "none";
+        } else {
+          // Populate Report Options
+          description.textContent = "What is wrong with this channel/group?";
+          options.forEach((option, index) => {
+            const li = document.createElement("li");
+            li.className =
+              "option-item flex justify-between items-center text-lg cursor-pointer";
+            li.setAttribute("data-option", index + 1);
+            li.innerHTML = `${option} <span class="icon text-gray-500">➔</span>`;
+            li.addEventListener("click", () => selectOption(li));
+            reportOptions.appendChild(li);
+          });
+        }
+      });
+
+    // Handle Option Selection
+    function selectOption(option) {
+      // Reset active option
+      if (activeOption) {
+        activeOption.querySelector(".icon").textContent = "➔";
+      }
+      activeOption = option;
+      activeOption.querySelector(".icon").textContent = "✔";
+      errorMessage.style.display = "none"; // Hide error if any
+    }
+
+    // Handle Submit Button
+    submitButton.addEventListener("click", () => {
+      if (!activeOption) {
+        errorMessage.style.display = "block";
+        return;
+      }
+
+      // Show Loading Animation
+      submitButton.innerHTML = `
+        <svg class="animate-spin h-5 w-5 mx-auto text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8h8a8 8 0 01-16 0z"></path>
+        </svg>
+      `;
+
+      // Simulate Sending Data to Bot (Replace URL with actual endpoint)
+      fetch(`https://your-backend.com/submit-report`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          reportId: reportId,
+          option: activeOption.getAttribute("data-option"),
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            // Close Telegram Mini App
+            if (window.Telegram.WebApp) {
+              Telegram.WebApp.close();
+            }
+          } else {
+            errorMessage.textContent = "⚠️ Error submitting report!";
+            errorMessage.style.display = "block";
+          }
+        });
+    });
+  </script>
+</body>
+</html>
